@@ -11,22 +11,24 @@
     <header>
         <a href="#" id="linklogo">LOGO</a>
         <nav>
-            <a href="#" id="linkhome">Home</a>
-            <a href="#" id="linkbrowse">Browse</a>
-            <a href="#" id="linkabout">About</a>
+            <button type="button" id="linkhome">Home</button>
+            <button type="button" id="linkbrowse">Browse</button>
+            <button type="button" id="linkabout">About</button>
         </nav>
-        <a href="#" id="linkcart">CART</a>
+        <button type="button" id="linkcart">Cart</button>
+
     </header>
 
   <main>
 
-    <article id="homeview">
+    <article id="homeview" class="view"> 
+        <p> HOMEVIEW </p>
 
     </article>
 
-    <article id="browseview" class="hidden">
+    <article id="browseview" class="view hidden">
         <section id="filter">
-
+            <p> BROWSEVIEW </p>
         </section>
 
         <section id="products">
@@ -35,18 +37,20 @@
         </section>
     </article>
 
-    <article id="singleproductview" class="hidden">
-
+    <article id="singleproductview" class="view hidden">
+        <p> SINGLE PRODUCT VIEW</p>
     </article>
 
-    <article id="shoppingcartview" class="hidden">
-
+    <article id="shoppingcartview" class="view hidden">
+        <p> SHOPPING CART VIEW </p>
     </article>
 
     <dialog id="about">
+        <button type="button" id="closeabout">Close</button>
         <p>Brief description, what this site is about, technologies used,
             group member names, URL: https://jkhuang16.github.io/comp3512-Assignment2/
         </p>
+        
     </dialog>
 
   </main>

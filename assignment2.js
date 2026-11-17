@@ -2,26 +2,57 @@ import config from './data-minifed.json' with { type: 'json' };
 
 document.addEventListener("DOMContentLoaded", () => {
 
+
+    //Swapping different views
+    function showView(selectedView) {
+        // Hide all the views except homeview (homeview is starting page)
+        const views = document.querySelectorAll(".view");
+        for (let eachView of views) {
+            eachView.classList.add("hidden");
+        }
+
+        // Reveal the view that is clicked
+        const revealView = document.querySelector("#" + selectedView);
+        revealView.classList.remove("hidden");
+    }
+
+    //Adding Event Listeners to header navigation bar for LOGO, HOME, BROWSE, CART
+    document.querySelector("#linklogo").addEventListener("click", () => {
+        showView("homeview");
+    });
+    //HOME view
+    document.querySelector("#linkhome").addEventListener("click", () => {
+        showView("homeview");
+    });
+    //BROWSE view
+    document.querySelector("#linkbrowse").addEventListener("click", () => {
+        showView("browseview");
+    });
+    //SHOPPING CART view
+    document.querySelector("#linkcart").addEventListener("click", () => {
+        showView("shoppingcartview");
+    });
+
+    //About Us Dialog/Popup - Adding popup and close
+    const aboutBtn = document.querySelector("#about");
+
+    document.querySelector("#linkabout").addEventListener("click", () => {
+        aboutBtn.showModal();
+    });
+
+    document.querySelector("#closeabout").addEventListener("click", () => {
+        aboutBtn.close();
+    });
+
+
     //Target HTML element of id=products
     const productSquare = document.querySelector("#products");
-
     //Gets products from config
     const products = config.products
 
-
     console.log(products);
-        // {
-        //     "id": 1,
-        //     "title": "Essence Mascara Lash Princess",
-        //     "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-        //     "category": "beauty",
-        //     "price": 9.99,
-        //     "images": [
-        //       "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
-        //     ],
-        //     "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
-        //   },
-    //looping through first 20 products object
+
+    //looping through products from config
     for(let eachProduct of products){
         //Main cards
         const card = document.createElement("div");
@@ -38,29 +69,35 @@ document.addEventListener("DOMContentLoaded", () => {
         //Thumbnail image
         const img = document.createElement("img");
         img.src = eachProduct.thumbnail
-
-        //Display the product id in a simple alert when the thumbnail is clicked
-        img.addEventListener("click", () => {
-            //ope
-        })
+        img.dataset.id = eachProduct.id;
 
         //Add to Cart button
         const btn = document.createElement("button");
         btn.textContent = "+";
-
-        //Display the product id and title ina  simple alert when the Add to Cart is clicked
-        btn.addEventListener("click", () => {
-            alert("Product id: " + eachProduct.id + " Title is: " + eachProduct.title);
-        })
+        btn.dataset.id = eachProduct.id;
 
         //Adding details to each card
         card.appendChild(img);
         card.appendChild(title);
         card.appendChild(price);
         card.appendChild(btn);
-        
 
         //Adding each card into productSquare
         productSquare.appendChild(card);
     }
+
+    //Using delegation to handle click events for productSquare
+    productSquare.addEventListener("click", (e) => {
+        //Verify user has clicked on image 
+        if (e.target && e.target.nodeName === "IMG") {
+            const clickedId = e.target.dataset.id;
+            alert("Clicked product ID: " + clickedId);
+        }
+
+        //Verify user has clicked on a button
+        if (e.target && e.target.nodeName === "BUTTON") {
+            const clickedId = e.target.dataset.id;
+            alert("Add to cart product ID: " + clickedId);
+        }
+    });
 })
