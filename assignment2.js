@@ -109,7 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function showSingleProduct(product) {
         //show singleView and remove any children elements to only show a single product at a time, otherwise kept showing multiple items
         const singleView = document.querySelector("#singleProductView");
-        singleView.innerHTML = ""; 
+        //google says replaceChildren() is better way of doing innerHTML = "" to clear old products
+        singleView.replaceChildren(); 
 
         //Main product imagge
         const image = document.createElement("img");
