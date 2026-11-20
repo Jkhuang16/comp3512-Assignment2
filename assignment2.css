@@ -4,6 +4,14 @@
     grid-template-columns: repeat(auto-fit, 220px);
 }
 
+#singleProductView{
+    /* making img 25% of the page width relative to its parent container - google */
+    img{
+        width: 25%;
+        height:auto
+    }
+}
+
 main{
     background-color: lightgray;
 }
