@@ -3,30 +3,31 @@
 <head>
   <meta charset="utf-8">
   <title>COMP 3512 - Assignment 2</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assignment2.css">
   <script type="module" src="assignment2.js"></script>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <!-- https://nerdcave.com/tailwind-cheat-sheet -->
 </head>
 <body>
     <header>
-        <a href="#" id="linklogo">LOGO</a>
+        <a href="#" id="linkLogo">LOGO</a>
         <nav>
-            <button type="button" id="linkhome">Home</button>
-            <button type="button" id="linkbrowse">Browse</button>
-            <button type="button" id="linkabout">About</button>
+            <button type="button" id="linkHome">Home</button>
+            <button type="button" id="linkBrowse">Browse</button>
+            <button type="button" id="linkAbout">About</button>
         </nav>
-        <button type="button" id="linkcart">Cart</button>
+        <button type="button" id="linkCart">Cart</button>
 
     </header>
 
   <main>
 
-    <article id="homeview" class="view"> 
+    <article id="homeView" class="view"> 
         <p> HOMEVIEW </p>
 
     </article>
 
-    <article id="browseview" class="view hidden">
+    <article id="browseView" class="view hidden">
         <section id="filter">
             <p> BROWSEVIEW </p>
         </section>
@@ -37,16 +38,16 @@
         </section>
     </article>
 
-    <article id="singleproductview" class="view hidden">
+    <article id="singleProductView" class="view hidden">
         <p> SINGLE PRODUCT VIEW</p>
     </article>
 
-    <article id="shoppingcartview" class="view hidden">
+    <article id="shoppingCartView" class="view hidden">
         <p> SHOPPING CART VIEW </p>
     </article>
 
     <dialog id="about">
-        <button type="button" id="closeabout">Close</button>
+        <button type="button" id="closeAbout">Close</button>
         <p>Brief description, what this site is about, technologies used,
             group member names, URL: https://jkhuang16.github.io/comp3512-Assignment2/
         </p>
