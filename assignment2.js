@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         //Ratings
 
-        //Tags
+        //Tags - need to be displayed as pills or boxes
         // const tagsElement = document.createElement("p");
         // const tag = product.tags;
         // for(let eachTag of tags){
@@ -143,8 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
         productDescription.textContent = product.description;
     
 
-    
-        // Append to singleproductview
+
+        // Append to singleProductView
         singleView.appendChild(image);
         singleView.appendChild(title);
         singleView.appendChild(price);
