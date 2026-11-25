@@ -44,7 +44,57 @@
     </article>
 
     <article id="shoppingCartView" class="view hidden">
-        <p> SHOPPING CART VIEW </p>
+        <h2> Shopping Cart </h2>
+
+        <!-- Empty cart message -->
+        <p id="emptyCartMsg" class="hidden">Your cart is currently empty</p>
+
+        <!-- Cart Items -->
+        <section id="cartItemsSection">
+            <table>
+                <tr>
+                    <th>Items</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Shipping and Summary -->
+        <section id="shipAndSummarySection">
+            <h3>Shipping</h3>
+            <div id="shippingChoices">
+                <select id="shippingMethod">
+                    <option value="standard">Standard</option>
+                    <option value="express">Express</option>
+                    <option value="priority">Priority</option>
+                </select>
+
+                <select id="shippingDest">
+                    <option value="CAN">Canada</option>
+                    <option value="USA">United States</option>
+                    <option value="INT">International</option>
+                </select>
+            </div>
+
+            <div id="totalSummary">
+                <h3>Summary</h3>
+                <div class="total-label">Merchandise</div>
+                <div class="total-amount" id="merchandiseAmount">$0.00</div>
+                <div class="total-label">Shipping</div>
+                <div class="total-amount" id="shippingAmount">$0.00</div>
+                <div class="total-label">Tax</div>
+                <div class="total-amount" id="taxAmount">$0.00</div>
+                <div class="total-label">Total</div>
+                <div class="total-amount" id="totalAmount">$0.00</div>
+            </div>
+        </section>
+
+        <section id="checkoutBtn">
+            <button type="button">Checkout</button>
+        </section>
+
     </article>
 
     <dialog id="about">
