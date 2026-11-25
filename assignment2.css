@@ -13,7 +13,7 @@
 }
 
 main{
-    background-color: lightgray;
+    background-color: rgb(245, 243, 243);
 }
 .product-card {
     display: flex;
@@ -44,3 +44,30 @@ p, h3 {
 .hidden {
     display: none;
 }
+
+/* Single Product View CSS */
+    .tag {
+        display: inline-block;
+        padding: 0.3rem;
+        margin-right: 0.3rem;
+        border: 1px solid #000000;
+        border-radius: 3px;
+        background-color: white;
+    }
+    #singleViewImg{
+        display: inline-block;
+
+    }
+    #singleProductDescription {
+        box-sizing: border-box;
+        padding: 24px;
+        background-color: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #1f2937;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }

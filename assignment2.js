@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    //Displaying Single Product View and mostly JS and minimal HTML
     function showSingleProduct(product) {
         //show singleView and remove any children elements to only show a single product at a time, otherwise kept showing multiple items
         const singleView = document.querySelector("#singleProductView");
@@ -114,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Main product imagge
         const image = document.createElement("img");
+
         image.src = product.images[0];
         image.alt = product.title;
 
@@ -129,28 +131,51 @@ document.addEventListener("DOMContentLoaded", () => {
         const sku = document.createElement("p");
         sku.textContent = "SKU: " + product.sku 
         
-        //Ratings
+        //Ratings (use stars)
+        const rating = document.createElement("p");
+        const ratingRounded = Math.round(product.rating);
+        let stars = "";
+            for(let i = 0; i < 5; i++){
+                if(i < ratingRounded){
+                    stars += "★"
+                }else {
+                    stars += "☆"
+                }
+            }
+        rating.textContent = "Rating: " + stars + " " + product.rating;
 
         //Tags - need to be displayed as pills or boxes
-        // const tagsElement = document.createElement("p");
-        // const tag = product.tags;
-        // for(let eachTag of tags){
-        //     const box = document.createElement
-        // }
-        // tags.textContent = product.tags;
+        const tagsElement = document.createElement("div");
+        tagsElement.classList.add("tags")
+        for (let eachTag of product.tags) {
+            const box = document.createElement("div");
+            box.classList.add("tag");
+            box.textContent = eachTag
+            tagsElement.appendChild(box);
+        }
+
+        //Stock of product
+        const stock = document.createElement("div");
+        if(product.stock > 0){
+            stock.textContent = "In Stock: " + product.stock;
+        } else {
+            stock.textContent = "Out of Stock - Sorry";
+        }
 
         //Product desciption
         const productDescription = document.createElement("p");
+        productDescription.id = "singleProductDescription";
         productDescription.textContent = product.description;
     
-
 
         // Append to singleProductView
         singleView.appendChild(image);
         singleView.appendChild(title);
         singleView.appendChild(price);
         singleView.appendChild(sku);
-        // singleView.appendChild(tags);
+        singleView.appendChild(rating)
+        singleView.appendChild(tagsElement);
+        singleView.appendChild(stock);
         singleView.appendChild(productDescription);
     }
     
