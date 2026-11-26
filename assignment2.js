@@ -111,18 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
         //show singleView and remove any children elements to only show a single product at a time, otherwise kept showing multiple items
         const singleView = document.querySelector("#singleProductView");
         //google says replaceChildren() is better way of doing innerHTML = "" to clear old products
-        singleView.replaceChildren(); 
+        singleView.replaceChildren();
 
         //Main product imagge
         const image = document.createElement("img");
-
         image.src = product.images[0];
         image.alt = product.title;
+
+        // Append image to singleProductView
+        singleView.appendChild(image);
+        // Append product details to singleProductView
+        singleView.appendChild(createSingleProductDetails(product));
+    }
+
+    //Function to create all details required for a single product and returning them as singleProductsDetails to be appended to singleProductView
+    function createSingleProductDetails(product) {
+        const singleProductsDetails = document.createElement("div");
 
         //Product title
         const title = document.createElement("h2");
         title.textContent = product.title;
-
         //Price
         const price = document.createElement("p");
         price.textContent = "$" + product.price.toFixed(2);
@@ -139,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(i < ratingRounded){
                     stars += "★"
                 }else {
-                    stars += "☆"
+                    stars += "☆";
                 }
             }
         rating.textContent = "Rating: " + stars + " " + product.rating;
@@ -166,17 +174,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const productDescription = document.createElement("p");
         productDescription.id = "singleProductDescription";
         productDescription.textContent = product.description;
-    
 
-        // Append to singleProductView
-        singleView.appendChild(image);
-        singleView.appendChild(title);
-        singleView.appendChild(price);
-        singleView.appendChild(sku);
-        singleView.appendChild(rating)
-        singleView.appendChild(tagsElement);
-        singleView.appendChild(stock);
-        singleView.appendChild(productDescription);
+        //Creating array of all elements to be added to singleProductsDetails and adding them
+        const singleProductViewElements = [title, price, sku, rating, tagsElement, stock, productDescription];
+        for(let eachElement of singleProductViewElements){
+            singleProductsDetails.appendChild(eachElement);
+        }
+
+        return singleProductsDetails;
     }
     
 
