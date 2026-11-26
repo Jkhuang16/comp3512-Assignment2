@@ -143,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //SKU 
         const sku = document.createElement("p");
+        sku.style.fontSize = "70%";
         sku.textContent = "SKU: " + product.sku 
         
         //Ratings (use stars)
