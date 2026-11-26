@@ -2,6 +2,10 @@ import config from './data-minifed.json' with { type: 'json' };
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    let shoppingCart = [];
+    let itemsInCart = 0;
+    let cartDollarValue = 0;
+
     //Swapping different views
     function showView(selectedView) {
         // Hide all the views except homeview (homeview is starting page)
@@ -122,6 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
         singleView.appendChild(image);
         // Append product details to singleProductView
         singleView.appendChild(createSingleProductDetails(product));
+        //Append Add to Cart button and box
+        singleView.appendChild(addToCart(product, shoppingCart));
     }
 
     //Function to create all details required for a single product and returning them as singleProductsDetails to be appended to singleProductView
@@ -134,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //Price
         const price = document.createElement("p");
         price.textContent = "$" + product.price.toFixed(2);
-        
+
         //SKU 
         const sku = document.createElement("p");
         sku.textContent = "SKU: " + product.sku 
@@ -184,6 +190,58 @@ document.addEventListener("DOMContentLoaded", () => {
         return singleProductsDetails;
     }
     
+
+    //Cart 
+    function CartItem(id, name, price, quantity){
+      this.id = id;
+      this.name = name;
+      this.price = price;
+      this.quantity = quantity;
+   };
+
+    //Function to add product to cart
+    function addToCart(product){
+        const cart = document.createElement("div");
+
+        const quantityLabel = document.createElement("label");
+        quantityLabel.textContent = "Quantity ";
+
+        const quantityInput = document.createElement("input");
+        quantityInput.type = "number";
+        quantityInput.min = 1;
+        quantityInput.value = 1;
+        
+        const addToCartBtn = document.createElement("button");
+        addToCartBtn.textContent = "+ Add to Cart";
+
+        addToCartBtn.addEventListener("Click", () =>{
+            let addedQuantity = quantityInput.value;
+
+            let foundItem = null;
+            for(let eachItem of shoppingCart){
+                if(eachItem.id == product.id){
+                    foundItem = eachItem;
+                    break;
+                }
+            }
+            if(foundItem){
+                cartValueAmount += foundItem.price; 
+            } else{
+                const newItem = new CartItem(id, name, product, quantity);
+                shoppingCart.push(newItem);
+            }
+
+            itemsInCart += addedQuantity;
+            cartDollarValue += product.price * addedQuantity;
+
+        });
+
+        cart.appendChild(quantityLabel);
+        cart.appendChild(quantityInput);
+        cart.appendChild(addToCartBtn);
+        
+        return cart;
+    }
 
 
 })
