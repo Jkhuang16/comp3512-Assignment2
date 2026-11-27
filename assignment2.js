@@ -2,7 +2,7 @@ import config from './data-minifed.json' with { type: 'json' };
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    let shoppingCart = [];
+    const shoppingCart = [];
     let itemsInCart = 0;
     let cartDollarValue = 0;
 
