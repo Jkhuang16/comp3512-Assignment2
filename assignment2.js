@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     //SHOPPING CART view
     document.querySelector("#linkCart").addEventListener("click", () => {
+        displayShoppingCart();
         showView("shoppingCartView");
     });
 
@@ -111,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showSingleProduct(product) {
         //show singleView and remove any children elements to only show a single product at a time, otherwise kept showing multiple items
         const singleView = document.querySelector("#singleProductView");
-        //google says replaceChildren() is better way of doing innerHTML = "" to clear old products
+        //google says replaceChildren() is a safer way of doing innerHTML = "" to clear old products
         singleView.replaceChildren();
 
         //Main product imagge(first one in array)
@@ -124,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Append product details to singleProductView
         singleView.appendChild(createSingleProductDetails(product));
         //Append Add to Cart button and box
-        singleView.appendChild(createCart(product));
+        singleView.appendChild(createAddToCart(product));
         //Append specifications box
         singleView.appendChild(createSpecifications(product));
         //append reviews box
@@ -183,7 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return singleProductsDetails;
     }
     
-
     //One cart item function
     function CartItem(id, title, price, quantity, thumbnail){
       this.id = id;
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
    }
 
     //Function to add product to cart
-    function createCart(product){
+    function createAddToCart(product){
         //main cart container
         const cart = document.createElement("div");
 
@@ -231,6 +231,8 @@ document.addEventListener("DOMContentLoaded", () => {
             //increse items and dollar value - a running global variable
             itemsInCart += addedQuantity;
             cartDollarValue += product.price * addedQuantity;
+
+            displayShoppingCart();
 
         })
         cart.appendChild(quantityLabel);
@@ -278,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //and generating their respective elements
         for (let eachItem of product.reviews) {
             const commentBox = document.createElement("div");
+            //Reviewer's naem and email
             const reviewerDetails = document.createElement("h4");
             reviewerDetails.textContent = `${eachItem.reviewerName} Email: ${eachItem.reviewerEmail}`;
             
@@ -285,10 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const date = document.createElement("p");
             const getDate = new Date(eachItem.date);
             const formattedDate = new Intl.DateTimeFormat("En-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric"
-            }).format(getDate);
+                year: "numeric", month: "short", day: "numeric"}).format(getDate);
             date.textContent = formattedDate;
 
             //Calling createRating function to create stars for each reviewer
@@ -342,8 +342,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // helper function to create delete <button> element
     function createDeleteBtn(className) {
         const btn = document.createElement("button");
-        if (className) span.className = className;
-        btn.textContent = "-";
+        btn.type = "button";
+        btn.textContent = "-"
+        if (className) btn.className = className;
         return btn;
     }
 
@@ -355,41 +356,63 @@ document.addEventListener("DOMContentLoaded", () => {
         return img;
     }
 
-    const list = document.querySelector("#list");
-    //const newItem = new CartItem(product.id, product.title, product.price, addedQuantity);
-    for (let item of shoppingCart) {
-        const li = document.createElement("li");
-        li.className = "cart-row";
+    function displayShoppingCart() {
+        const list = document.querySelector("#shoppingCartlist");
+        list.replaceChildren();
+        //removing dot infront of list
+        list.style.listStyleType = "none"
 
-        // add delete button to <li>
-        const deleteBtn = createDeleteBtn("-")
-        li.appendChild(deleteBtn);
-        
-        // add thumbnail to <li> (***** add classname later for styling *****)
-        li.appendChild(createThumbnail(item.thumbnail, item.title));
+        const checkoutBtn = document.querySelector("#checkoutBtn");
+        const shippingOptions = document.querySelector("#shippingChoices")
+        const emptyCart = document.querySelector("#emptyCartMsg");
 
-        // add product title to <li>
-        const title = document.createElement("p");
-        title.textContent = item.title;
-        li.appendChild(createSpan(title, ""));
+        //checks if cart is empty and display cart accordingly
+        if(shoppingCart.length == 0){
+            emptyCart.classList.remove("hidden");
+            checkoutBtn.classList.add("hidden");
+            shippingOptions.classList.add("hidden");
+        }else{
+            checkoutBtn.classList.remove("hidden");
+            shippingOptions.classList.remove("hidden");
+        }
 
-        // add price to <li>
-        const price = document.createElement("p");
-        price.textContent = item.price.toFixed(2);
-        li.appendChild(createSpan(price, ""));
+        for (let item of shoppingCart) {
+            const li = document.createElement("li");
+            li.className = "cart-row";
 
-        // add quantity to <li>
-        const quantity = document.createElement("p");
-        quantity.textContent = item.quantity
-        li.appendChild(createSpan(quantity, ""));
+            // add delete button to <li>
+            const deleteBtn = createDeleteBtn("delete")
+            li.appendChild(deleteBtn);
 
-        // add subtotal to <li>
-        const subtotal = document.createElement("p");
-        price.textContent = (item.price * item.quantity).toFixed(2);
-        li.appendChild(createSpan(subtotal, ""));
+            // add thumbnail to <li> (***** add classname later for styling *****)
+            li.appendChild(createThumbnail(item.thumbnail, item.title));
 
-        // add <li> to <ul> list
-        list.appendChild(li);
+            // add product title to <li>
+            const title = document.createElement("p");
+            title.textContent = item.title;
+            li.appendChild(createSpan(title, ""));
+
+            // add price to <li>
+            const price = document.createElement("p");
+            price.textContent = item.price.toFixed(2);
+            li.appendChild(createSpan(price, ""));
+
+            // add quantity to <li>
+            const quantity = document.createElement("p");
+            quantity.textContent = item.quantity
+            li.appendChild(createSpan(quantity, ""));
+
+            // add subtotal to <li>
+            const subtotal = document.createElement("p");
+            price.textContent = (item.price * item.quantity).toFixed(2);
+            li.appendChild(createSpan(subtotal, ""));
+
+            // add <li> to <ul> list
+            list.appendChild(li);
+        }
+        const merchandiseAmount = document.querySelector("#merchandiseAmount");
+        merchandiseAmount.textContent = `$${cartDollarValue.toFixed(2)}`
+
     }
 
 
