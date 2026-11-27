@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Append product details to singleProductView
         singleView.appendChild(createSingleProductDetails(product));
         //Append Add to Cart button and box
-        singleView.appendChild(addToCart(product, shoppingCart));
+        singleView.appendChild(addToCart(product));
     }
 
     //Function to create all details required for a single product and returning them as singleProductsDetails to be appended to singleProductView
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
    };
 
     //Function to add product to cart
-    function addToCart(product){
+    function addToCart(product, shoppindCart){
         //main cart container
         const cart = document.createElement("div");
 
