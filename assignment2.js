@@ -68,8 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         price.textContent = "$" + eachProduct.price.toFixed(2);
 
         //Thumbnail image
-        const img = document.createElement("img");
-        img.src = eachProduct.thumbnail
+        const img = createThumbnail(eachProduct.thumbnail, eachProduct.title);
         img.dataset.id = eachProduct.id;
 
         //Add to Cart button
@@ -186,11 +185,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     //One cart item function
-    function CartItem(id, name, price, quantity){
+    function CartItem(id, title, price, quantity, thumbnail){
       this.id = id;
-      this.name = name;
+      this.title = title;
       this.price = price;
       this.quantity = quantity;
+      this.thumbnail = thumbnail;
    }
 
     //Function to add product to cart
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if(foundItem){
                 foundItem.quantity += addedQuantity;
             } else{
-                const newItem = new CartItem(product.id, product.title, product.price, addedQuantity);
+                const newItem = new CartItem(product.id, product.title, product.price, addedQuantity, product.thumbnail);
                 shoppingCart.push(newItem);
             }
 
@@ -343,6 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function createDeleteBtn(className) {
         const btn = document.createElement("button");
         if (className) span.className = className;
+        btn.textContent = "-";
         return btn;
     }
 
@@ -355,6 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const list = document.querySelector("#list");
+    //const newItem = new CartItem(product.id, product.title, product.price, addedQuantity);
     for (let item of shoppingCart) {
         const li = document.createElement("li");
         li.className = "cart-row";
@@ -383,7 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // add subtotal to <li>
         const subtotal = document.createElement("p");
-        price.textContent = price * quantity;
+        price.textContent = (item.price * item.quantity).toFixed(2);
         li.appendChild(createSpan(subtotal, ""));
 
         // add <li> to <ul> list
