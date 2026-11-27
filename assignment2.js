@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cart.appendChild(addToCartBtn);
         
         return cart;
-    }
+    } //End of CART VIEW
 
 
 })
