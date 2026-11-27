@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
 
-    //Cart 
+    //One cart item function
     function CartItem(id, name, price, quantity){
       this.id = id;
       this.name = name;
@@ -202,22 +202,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Function to add product to cart
     function addToCart(product){
+        //main cart container
         const cart = document.createElement("div");
 
         const quantityLabel = document.createElement("label");
         quantityLabel.textContent = "Quantity ";
-
+        //quantity input type is number and defaulted to 1
         const quantityInput = document.createElement("input");
         quantityInput.type = "number";
         quantityInput.min = 1;
         quantityInput.value = 1;
-        
+        //creating add to cart button
         const addToCartBtn = document.createElement("button");
         addToCartBtn.textContent = "+ Add to Cart";
 
-        addToCartBtn.addEventListener("Click", () =>{
-            let addedQuantity = quantityInput.value;
-
+        //add to cart button event listener and adding quantity, price, total items 
+        addToCartBtn.addEventListener("click", () =>{
+            let addedQuantity = Number(quantityInput.value);
+            //check if item is in shopping cart to prevent duplicate items in cart
             let foundItem = null;
             for(let eachItem of shoppingCart){
                 if(eachItem.id == product.id){
@@ -225,17 +227,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
                 }
             }
+            //if item in cart, increase quantity respectively, otherwise create item and add
             if(foundItem){
-                cartValueAmount += foundItem.price; 
+                foundItem.quantity += addedQuantity;
             } else{
-                const newItem = new CartItem(id, name, product, quantity);
+                const newItem = new CartItem(product.id, product.name, product.product, product.quantity);
                 shoppingCart.push(newItem);
             }
 
+            //increse items and dollar value - a running global variable
             itemsInCart += addedQuantity;
             cartDollarValue += product.price * addedQuantity;
 
+            //testing
+            console.log("insside button event listner" + shoppingCart, itemsInCart, cartDollarValue)
+
         });
+        //testing
+        console.log("outside" + shoppingCart, itemsInCart, cartDollarValue)
+        console.log("HEELO")
 
         cart.appendChild(quantityLabel);
         cart.appendChild(quantityInput);
