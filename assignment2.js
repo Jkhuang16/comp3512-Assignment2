@@ -254,5 +254,37 @@ document.addEventListener("DOMContentLoaded", () => {
         return cart;
     } //End of CART VIEW
 
+    // helper function to create list <span> element
+    function createSpan(content, className) {
+        const span = document.createElement("span");
+        span.appendChild(content);
+        if (className) span.className = className;
+        return span;
+    }
+
+    // helper function to create delete <button> element
+    function createDeleteBtn(className) {
+        const btn = document.createElement("button");
+        if (className) span.className = className;
+        return btn;
+    }
+
+    // helper function to create thumbnail <img> element
+    function createThumbnail(src, alt) {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = alt;
+        return img;
+    }
+
+    const list = document.querySelector("#list");
+    for (let item of shoppingCart) {
+        const li = document.createElement("li");
+        li.className = "cart-row";
+        li.appendChild(createThumbnail(item.thumbnail, item.title));
+
+    }
+
+
 
 })
