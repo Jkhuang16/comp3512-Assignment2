@@ -33,8 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     //SHOPPING CART view
     document.querySelector("#linkCart").addEventListener("click", () => {
-        displayShoppingCart();
         showView("shoppingCartView");
+        displayShoppingCart();
+
     });
 
     //About Us Dialog/Popup - Adding popup and close
