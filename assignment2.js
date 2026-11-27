@@ -357,13 +357,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displayShoppingCart() {
+        /* Shopping Cart Items List Section */
         const list = document.querySelector("#shoppingCartlist");
         list.replaceChildren();
         //removing dot infront of list
         list.style.listStyleType = "none"
 
         const checkoutBtn = document.querySelector("#checkoutBtn");
-        const shippingOptions = document.querySelector("#shippingChoices")
+        const shippingChoices = document.querySelector("#shippingChoices")
         const emptyCart = document.querySelector("#emptyCartMsg");
 
         //checks if cart is empty and display cart accordingly
@@ -394,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // add price to <li>
             const price = document.createElement("p");
-            price.textContent = item.price.toFixed(2);
+            price.textContent = `$${item.price.toFixed(2)}`;
             li.appendChild(createSpan(price, ""));
 
             // add quantity to <li>
@@ -404,15 +405,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // add subtotal to <li>
             const subtotal = document.createElement("p");
-            price.textContent = (item.price * item.quantity).toFixed(2);
+            subtotal.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
             li.appendChild(createSpan(subtotal, ""));
 
             // add <li> to <ul> list
             list.appendChild(li);
         }
+
+        /* Shopping Cart Summary Section */
+
+
+
+
         const merchandiseAmount = document.querySelector("#merchandiseAmount");
         merchandiseAmount.textContent = `$${cartDollarValue.toFixed(2)}`
 
+
+
+    }
+
+    // Function to calculate the total
+    function calcTotal() {
+        
     }
 
 
