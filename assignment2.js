@@ -127,10 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
         singleView.appendChild(createSingleProductDetails(product));
         //Append Add to Cart button and box
         singleView.appendChild(createAddToCart(product));
-        //Append specifications box
-        singleView.appendChild(createSpecifications(product));
-        //append reviews box
-        singleView.appendChild(createReviews(product));
+        //Append tab system to let user display either specifications or reviews
+        singleView.appendChild(createTabs(product));
     }
 
     //Function to create all details required for a single product and returning them as singleProductsDetails to be appended to singleProductView
@@ -153,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rating = document.createElement("p");
         rating.textContent = "Rating: " + createRating(product.rating) + " " + product.rating;
 
-        //Tags - need to be displayed as pills or boxes
+        //Tags - displayed as boxes
         const tagsElement = document.createElement("div");
         tagsElement.classList.add("tags")
         for (let eachTag of product.tags) {
@@ -253,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
         weight.textContent = "Weight: " + product.weight + "lbs";
 
         const dimensions = document.createElement("p");
-        dimensions.textContent = `Width: ${product.dimensions.width}cm x Height: ${product.dimensions.height}cm x Depth: ${product.dimensions.depth}cm`;
+        dimensions.textContent = `Width:${product.dimensions.width}cm x Height:${product.dimensions.height}cm x Depth:${product.dimensions.depth}cm`;
         
         const warranty = document.createElement("p");
         warranty.textContent = "Warranty: " + product.warrantyInformation;
@@ -311,11 +309,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    //function to create tab system to display specifications or reviews
-    function createTabs(product){
+    //Function to create tab system to alternate display specifications or reviews
+    function createTabs(product) {
         const tabs = document.createElement("div");
 
+        //creating Specifications button
+        const specBtn = document.createElement("button");
+        specBtn.type = "button";
+        specBtn.textContent = "Specifications";
+        //creating Reviews button
+        const reviewBtn = document.createElement("button");
+        reviewBtn.type = "button";
+        reviewBtn.textContent = "Reviews";
 
+        //creating specification and review box and hiding both
+        const specBox = createSpecifications(product);
+        const reviewBox = createReviews(product);
+        reviewBox.classList.add("hidden");
+
+        //if Specifications is clicked, show Specifications
+        specBtn.addEventListener("click", () => {
+            specBox.classList.remove("hidden");
+            reviewBox.classList.add("hidden");
+        });
+
+        //if Reviews is clicked, show Reviews
+        reviewBtn.addEventListener("click", () => {
+            reviewBox.classList.remove("hidden");
+            specBox.classList.add("hidden");
+        });
+
+        tabs.appendChild(specBtn);
+        tabs.appendChild(reviewBtn);
+        tabs.appendChild(specBox);
+        tabs.appendChild(reviewBox);
+
+        return tabs;
     }
 
     // helper function to create stars based on a rating, rounded to nearest whole number
