@@ -51,19 +51,18 @@
 
         <!-- Cart Items -->
         <section id="cartItemsSection">
-            <table>
-                <tr>
-                    <th>Items</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                </tr>
-            </table>
+            <div id="cartList">
+                <span>Items</span>
+                <span>Price</span>
+                <span>Quantity</span>
+                <span>Subtotal</span>
+            </div>
+            <ul id="list"></ul>
         </section>
 
         <!-- Shipping and Summary -->
         <section id="shipAndSummarySection">
-            <h3>Shipping</h3>
+            <span>Shipping</span>
             <div id="shippingChoices">
                 <select id="shippingMethod">
                     <option value="standard">Standard</option>
@@ -79,7 +78,7 @@
             </div>
 
             <div id="totalSummary">
-                <h3>Summary</h3>
+                <span>Summary</span>
                 <div class="total-label">Merchandise</div>
                 <div class="total-amount" id="merchandiseAmount">$0.00</div>
                 <div class="total-label">Shipping</div>
