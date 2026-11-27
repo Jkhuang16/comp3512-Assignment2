@@ -51,9 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //Target HTML element of id=products
     const productSquare = document.querySelector("#products");
     //Gets products from config
-    const products = config.products
-
-    console.log(products);
+    const products = config.products;
 
     //looping through products from config
     for(let eachProduct of products){
@@ -110,14 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    //Displaying Single Product View and mostly JS and minimal HTML
+    //Displaying Single Product View using mostly JS and minimal HTML
     function showSingleProduct(product) {
         //show singleView and remove any children elements to only show a single product at a time, otherwise kept showing multiple items
         const singleView = document.querySelector("#singleProductView");
         //google says replaceChildren() is better way of doing innerHTML = "" to clear old products
         singleView.replaceChildren();
 
-        //Main product imagge
+        //Main product imagge(first one in array)
         const image = document.createElement("img");
         image.src = product.images[0];
         image.alt = product.title;
@@ -127,7 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Append product details to singleProductView
         singleView.appendChild(createSingleProductDetails(product));
         //Append Add to Cart button and box
-        singleView.appendChild(addToCart(product));
+        singleView.appendChild(createCart(product));
+        //Append specifications box
+        singleView.appendChild(createSpecifications(product));
+        //append reviews box
+        singleView.appendChild(createReviews(product));
     }
 
     //Function to create all details required for a single product and returning them as singleProductsDetails to be appended to singleProductView
@@ -135,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const singleProductsDetails = document.createElement("div");
 
         //Product title
-        const title = document.createElement("h2");
+        const title = document.createElement("h3");
         title.textContent = product.title;
         //Price
         const price = document.createElement("p");
@@ -146,18 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
         sku.style.fontSize = "70%";
         sku.textContent = "SKU: " + product.sku 
         
-        //Ratings (use stars)
+        //Calling createRating function to create stars 
         const rating = document.createElement("p");
-        const ratingRounded = Math.round(product.rating);
-        let stars = "";
-            for(let i = 0; i < 5; i++){
-                if(i < ratingRounded){
-                    stars += "★"
-                }else {
-                    stars += "☆";
-                }
-            }
-        rating.textContent = "Rating: " + stars + " " + product.rating;
+        rating.textContent = "Rating: " + createRating(product.rating) + " " + product.rating;
 
         //Tags - need to be displayed as pills or boxes
         const tagsElement = document.createElement("div");
@@ -198,10 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
       this.name = name;
       this.price = price;
       this.quantity = quantity;
-   };
+   }
 
     //Function to add product to cart
-    function addToCart(product, shoppindCart){
+    function createCart(product){
         //main cart container
         const cart = document.createElement("div");
 
@@ -231,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if(foundItem){
                 foundItem.quantity += addedQuantity;
             } else{
-                const newItem = new CartItem(product.id, product.name, product.product, product.quantity);
+                const newItem = new CartItem(product.id, product.title, product.price, addedQuantity);
                 shoppingCart.push(newItem);
             }
 
@@ -239,20 +232,109 @@ document.addEventListener("DOMContentLoaded", () => {
             itemsInCart += addedQuantity;
             cartDollarValue += product.price * addedQuantity;
 
-            //testing
-            console.log("insside button event listner" + shoppingCart, itemsInCart, cartDollarValue)
-
-        });
-        //testing
-        console.log("outside" + shoppingCart, itemsInCart, cartDollarValue)
-        console.log("HEELO")
-
+        })
         cart.appendChild(quantityLabel);
         cart.appendChild(quantityInput);
         cart.appendChild(addToCartBtn);
         
         return cart;
-    } //End of CART VIEW
+    } //End of createCart
 
+    //function to create specifications box
+    //weight(lbs), dimensions(cm), warranty, shipping, return policy
+    function createSpecifications(product){
+        const specBox = document.createElement("div");
+
+        const weight = document.createElement("p");
+        weight.textContent = "Weight: " + product.weight + "lbs";
+
+        const dimensions = document.createElement("p");
+        dimensions.textContent = `Width: ${product.dimensions.width} Height: ${product.dimensions.height} Depth: ${product.dimensions.depth}`;
+        
+        const warranty = document.createElement("p");
+        warranty.textContent = "Warranty: " + product.warrantyInformation;
+
+        const shippingInfo = document.createElement("p");
+        shippingInfo.textContent = "Shipping: " + product.shippingInformation;
+
+        const returnPolicy = document.createElement("p");
+        returnPolicy.textContent = "Return Policy: " + product.returnPolicy;
+
+        //adding all specification elements and appending to main specBox
+        const specElements = [weight, dimensions, warranty, shippingInfo, returnPolicy];
+        for(let eachItem of specElements){
+            specBox.appendChild(eachItem);
+        }
+        return specBox;
+    }
+
+    //function to create reviews box
+    //rating(stars), comment, date(in time order, reviewer name in scrollable list)
+    // "reviews": [
+    //     {
+    //       "rating": 3,
+    //       "comment": "Would not recommend!",
+    //       "date": "2025-04-30T09:41:02.053Z",
+    //       "reviewerName": "Eleanor Collins",
+    //       "reviewerEmail": "eleanor.collins@x.dummyjson.com"
+    //     }
+    function createReviews(product){
+        const reviewBox = document.createElement("div");
+
+        for (let eachItem of product.reviews) {
+            const commentBox = document.createElement("div");
+            const reviewerDetails = document.createElement("h4");
+            reviewerDetails.textContent = `${eachItem.reviewerName} Email: ${eachItem.reviewerEmail}`;
+            
+            const date = document.createElement("p");
+            const getDate = new Date(eachItem.date);
+            const formattedDate = new Intl.DateTimeFormat("En-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            }).format(getDate);
+            date.textContent = formattedDate;
+
+            //Calling createRating function to create stars for each reviewer
+            const rating = document.createElement("p");
+            rating.textContent = "Rating: " + createRating(eachItem.rating) + " " + eachItem.rating;
+
+            const comment = document.createElement("p");
+            comment.textContent = eachItem.comment;
+            comment.style.fontSize = "80%";
+
+            commentBox.appendChild(reviewerDetails);
+            commentBox.appendChild(date);
+            commentBox.appendChild(rating);
+            commentBox.appendChild(comment)
+
+            reviewBox.appendChild(commentBox);
+        }
+        return reviewBox;
+
+    }
+
+    //function to create tab system to display specifications or reviews
+    function createTabs(product){
+        const tabs = document.createElement("div");
+
+
+    }
+
+    function createRating(rating) {
+        const ratingRounded = Math.round(rating);
+        let stars = "";
+        for (let i = 0; i < 5; i++) {
+            if (i < ratingRounded) {
+                stars += "★"
+            } else {
+                stars += "☆";
+            }
+        }
+        return stars;
+    }
+
+
+    
 
 })
