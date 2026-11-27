@@ -271,22 +271,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //function to create reviews box
     //rating(stars), comment, date(in time order, reviewer name in scrollable list)
-    // "reviews": [
-    //     {
-    //       "rating": 3,
-    //       "comment": "Would not recommend!",
-    //       "date": "2025-04-30T09:41:02.053Z",
-    //       "reviewerName": "Eleanor Collins",
-    //       "reviewerEmail": "eleanor.collins@x.dummyjson.com"
-    //     }
     function createReviews(product){
         const reviewBox = document.createElement("div");
 
+        //looping through each reviewer and extracting each name, email, date, comment, rating
+        //and generating their respective elements
         for (let eachItem of product.reviews) {
             const commentBox = document.createElement("div");
             const reviewerDetails = document.createElement("h4");
             reviewerDetails.textContent = `${eachItem.reviewerName} Email: ${eachItem.reviewerEmail}`;
             
+            //creating date element and formatting according to Intl.DateTimeFormat
             const date = document.createElement("p");
             const getDate = new Date(eachItem.date);
             const formattedDate = new Intl.DateTimeFormat("En-US", {
@@ -299,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
             //Calling createRating function to create stars for each reviewer
             const rating = document.createElement("p");
             rating.textContent = "Rating: " + createRating(eachItem.rating) + " " + eachItem.rating;
-
+            //Reviewer comment 
             const comment = document.createElement("p");
             comment.textContent = eachItem.comment;
             comment.style.fontSize = "80%";
@@ -322,6 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    // helper function to create stars based on a rating, rounded to nearest whole number
     function createRating(rating) {
         const ratingRounded = Math.round(rating);
         let stars = "";
