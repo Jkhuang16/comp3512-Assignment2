@@ -401,10 +401,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if(shoppingCart.length == 0){
             emptyCart.classList.remove("hidden");
             checkoutBtn.classList.add("hidden");
-            shippingOptions.classList.add("hidden");
+            shippingChoices.classList.add("hidden");
         }else{
             checkoutBtn.classList.remove("hidden");
-            shippingOptions.classList.remove("hidden");
+            shippingChoices.classList.remove("hidden");
         }
 
         for (let item of shoppingCart) {
