@@ -281,8 +281,36 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let item of shoppingCart) {
         const li = document.createElement("li");
         li.className = "cart-row";
+
+        // add delete button to <li>
+        const deleteBtn = createDeleteBtn("-")
+        li.appendChild(deleteBtn);
+        
+        // add thumbnail to <li> (***** add classname later for styling *****)
         li.appendChild(createThumbnail(item.thumbnail, item.title));
 
+        // add product title to <li>
+        const title = document.createElement("p");
+        title.textContent = item.title;
+        li.appendChild(createSpan(title, ""));
+
+        // add price to <li>
+        const price = document.createElement("p");
+        price.textContent = item.price.toFixed(2);
+        li.appendChild(createSpan(price, ""));
+
+        // add quantity to <li>
+        const quantity = document.createElement("p");
+        quantity.textContent = item.quantity
+        li.appendChild(createSpan(quantity, ""));
+
+        // add subtotal to <li>
+        const subtotal = document.createElement("p");
+        price.textContent = price * quantity;
+        li.appendChild(createSpan(subtotal, ""));
+
+        // add <li> to <ul> list
+        list.appendChild(li);
     }
 
 
