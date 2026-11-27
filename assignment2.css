@@ -1,24 +1,38 @@
-#mainLogo{
-    height: 10%;
-    width: 10%;
-}
-
-#products {
-    display: grid;
-    grid-gap: 1em;
-    grid-template-columns: repeat(auto-fit, 220px);
-}
-
-#singleProductView{
-    /* making img 25% of the page width relative to its parent container - google */
-    img{
-        width: 80%;
-        height:auto
-    }
-}
 
 main{
-    background-color: rgb(245, 243, 243);
+    background-color: rgb(255, 255, 255);
+}
+header {
+    background-color:aliceblue;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+}
+header nav{
+    display: flex;
+    gap: 6rem;
+}
+
+#linkLogo img{
+    height: 45%;
+    width: 45%;
+    display: block;
+}
+
+
+.nav-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    align-items: center;
+    font-weight:bolder
+}
+
+footer{
+    background-color:aliceblue
 }
 .product-card {
     display: flex;
@@ -50,7 +64,23 @@ p, h3 {
     display: none;
 }
 
+#products {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(auto-fit, 220px);
+}
+
+
+
 /* Single Product View CSS */
+    #singleProductView{
+        /* making img 25% of the page width relative to its parent container */
+        img{
+            width: 80%;
+            height:auto
+        }
+    }
+
     .tag {
         display: inline-block;
         padding: 0.3rem;
