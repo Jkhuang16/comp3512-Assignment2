@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
         weight.textContent = "Weight: " + product.weight + "lbs";
 
         const dimensions = document.createElement("p");
-        dimensions.textContent = `Width: ${product.dimensions.width} Height: ${product.dimensions.height} Depth: ${product.dimensions.depth}`;
+        dimensions.textContent = `Width: ${product.dimensions.width}cm x Height: ${product.dimensions.height}cm x Depth: ${product.dimensions.depth}cm`;
         
         const warranty = document.createElement("p");
         warranty.textContent = "Warranty: " + product.warrantyInformation;
