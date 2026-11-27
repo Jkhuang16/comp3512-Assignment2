@@ -241,4 +241,158 @@ document.addEventListener("DOMContentLoaded", () => {
     } //End of CART VIEW
 
 
+    //function to create specifications box
+    //weight(lbs), dimensions(cm), warranty, shipping, return policy
+    function createSpecifications(product){
+        const specBox = document.createElement("div");
+
+        const weight = document.createElement("p");
+        weight.textContent = "Weight: " + product.weight + "lbs";
+
+        const dimensions = document.createElement("p");
+        dimensions.textContent = `Width: ${product.dimensions.width} Height: ${product.dimensions.height} Depth: ${product.dimensions.depth}`;
+        
+        const warranty = document.createElement("p");
+        warranty.textContent = "Warranty: " + product.warrantyInformation;
+
+        const shippingInfo = document.createElement("p");
+        shippingInfo.textContent = "Shipping: " + product.shippingInformation;
+
+        const returnPolicy = document.createElement("p");
+        returnPolicy.textContent = "Return Policy: " + product.returnPolicy;
+
+        //adding all specification elements and appending to main specBox
+        const specElements = [weight, dimensions, warranty, shippingInfo, returnPolicy];
+        for(let eachItem of specElements){
+            specBox.appendChild(eachItem);
+        }
+        return specBox;
+    }
+
+    //function to create reviews box
+    //rating(stars), comment, date(in time order, reviewer name in scrollable list)
+    // "reviews": [
+    //     {
+    //       "rating": 3,
+    //       "comment": "Would not recommend!",
+    //       "date": "2025-04-30T09:41:02.053Z",
+    //       "reviewerName": "Eleanor Collins",
+    //       "reviewerEmail": "eleanor.collins@x.dummyjson.com"
+    //     }
+    function createReviews(product){
+        const reviewBox = document.createElement("div");
+
+        for (let eachItem of product.reviews) {
+            const commentBox = document.createElement("div");
+            const reviewerDetails = document.createElement("h4");
+            reviewerDetails.textContent = `${eachItem.reviewerName} Email: ${eachItem.reviewerEmail}`;
+            
+            const date = document.createElement("p");
+            const getDate = new Date(eachItem.date);
+            const formattedDate = new Intl.DateTimeFormat("En-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            }).format(getDate);
+            date.textContent = formattedDate;
+
+            //Calling createRating function to create stars for each reviewer
+            const rating = document.createElement("p");
+            rating.textContent = "Rating: " + createRating(eachItem.rating) + " " + eachItem.rating;
+
+            const comment = document.createElement("p");
+            comment.textContent = eachItem.comment;
+            comment.style.fontSize = "80%";
+
+            commentBox.appendChild(reviewerDetails);
+            commentBox.appendChild(date);
+            commentBox.appendChild(rating);
+            commentBox.appendChild(comment)
+
+            reviewBox.appendChild(commentBox);
+        }
+        return reviewBox;
+
+    }
+
+    //function to create tab system to display specifications or reviews
+    function createTabs(product){
+        const tabs = document.createElement("div");
+
+
+    }
+
+    function createRating(rating) {
+        const ratingRounded = Math.round(rating);
+        let stars = "";
+        for (let i = 0; i < 5; i++) {
+            if (i < ratingRounded) {
+                stars += "★"
+            } else {
+                stars += "☆";
+            }
+        }
+        return stars;
+    }
+
+       // helper function to create list <span> element
+    function createSpan(content, className) {
+        const span = document.createElement("span");
+        span.appendChild(content);
+        if (className) span.className = className;
+        return span;
+    }
+
+    // helper function to create delete <button> element
+    function createDeleteBtn(className) {
+        const btn = document.createElement("button");
+        if (className) span.className = className;
+        return btn;
+    }
+
+    // helper function to create thumbnail <img> element
+    function createThumbnail(src, alt) {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = alt;
+        return img;
+    }
+
+    const list = document.querySelector("#list");
+    for (let item of shoppingCart) {
+        const li = document.createElement("li");
+        li.className = "cart-row";
+
+        // add delete button to <li>
+        const deleteBtn = createDeleteBtn("-")
+        li.appendChild(deleteBtn);
+        
+        // add thumbnail to <li> (***** add classname later for styling *****)
+        li.appendChild(createThumbnail(item.thumbnail, item.title));
+
+        // add product title to <li>
+        const title = document.createElement("p");
+        title.textContent = item.title;
+        li.appendChild(createSpan(title, ""));
+
+        // add price to <li>
+        const price = document.createElement("p");
+        price.textContent = item.price.toFixed(2);
+        li.appendChild(createSpan(price, ""));
+
+        // add quantity to <li>
+        const quantity = document.createElement("p");
+        quantity.textContent = item.quantity
+        li.appendChild(createSpan(quantity, ""));
+
+        // add subtotal to <li>
+        const subtotal = document.createElement("p");
+        price.textContent = price * quantity;
+        li.appendChild(createSpan(subtotal, ""));
+
+        // add <li> to <ul> list
+        list.appendChild(li);
+    }
+
+
 })
