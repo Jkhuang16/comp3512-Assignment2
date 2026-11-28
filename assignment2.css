@@ -106,3 +106,41 @@ p, h3 {
         flex-direction: column;
         gap: 12px;
     }
+
+/* Shopping Cart View */
+#shoppingCartList {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.cart-title {}
+
+.cart-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.cart-row img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 1px solid #0e0e0e;
+    border-radius: 6px;
+}
+#shipAndSummarySection {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+#totalSummary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 1rem;
+}
+#checkoutBtn {
+    border: 1px solid #0e0e0e;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}

@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayShoppingCart() {
         /* Shopping Cart Items List Section */
-        const list = document.querySelector("#shoppingCartlist");
+        const list = document.querySelector("#shoppingCartList");
         list.replaceChildren();
         //removing dot infront of list
         list.style.listStyleType = "none"
@@ -448,11 +448,8 @@ document.addEventListener("DOMContentLoaded", () => {
         method.addEventListener("change", calcTotal);
         dest.addEventListener("change", calcTotal);
 
-
         const merchandiseAmount = document.querySelector("#merchandiseAmount");
         merchandiseAmount.textContent = `$${cartDollarValue.toFixed(2)}`
-
-
 
     }
 
