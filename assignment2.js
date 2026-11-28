@@ -242,6 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cartDollarValue += product.price * addedQuantity;
 
             displayShoppingCart();
+            snackBarHandler(`You've added ${addedQuantity} ${product.title} to the cart!`);
 
         })
         cart.appendChild(quantityLabel);
@@ -250,6 +251,16 @@ document.addEventListener("DOMContentLoaded", () => {
         
         return cart;
     } //End of CART VIEW
+
+    function snackBarHandler(message){
+        const bar = document.querySelector("#snackbar");
+        bar.textContent = message;
+        bar.classList.remove("hidden");
+        //hide snackbar after 5 seconds
+        setTimeout(() => {
+            bar.classList.add("hidden");
+        }, 5000);
+    }
 
 
     //function to create specifications box
