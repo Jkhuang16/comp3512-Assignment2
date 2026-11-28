@@ -109,6 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    
+
     //Displaying Single Product View using mostly JS and minimal HTML
     function showSingleProduct(product) {
         //show singleView and remove any children elements to only show a single product at a time, otherwise kept showing multiple items
@@ -121,6 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
         image.src = product.images[0];
         image.alt = product.title;
 
+        // Append breadcrumb navigation to top
+        singleView.appendChild(createBreadcrumbNav(product));
         // Append image to singleProductView
         singleView.appendChild(image);
         // Append product details to singleProductView
@@ -129,6 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
         singleView.appendChild(createAddToCart(product));
         //Append tab system to let user display either specifications or reviews
         singleView.appendChild(createTabs(product));
+    }
+
+    function createBreadcrumbNav(product){
+        const breadcrumbBox = document.createElement("p");
+        breadcrumbBox.textContent = `Home > ${product.category} > ${product.title}`;
+        return breadcrumbBox;
     }
 
     //Function to create all details required for a single product and returning them as singleProductsDetails to be appended to singleProductView
