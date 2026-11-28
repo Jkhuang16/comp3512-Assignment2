@@ -443,8 +443,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         /* Shopping Cart Summary Section */
-
-
+        const method = document.querySelector("#shippingMethod");
+        const dest = document.querySelector("#shippingDest");
+        method.addEventListener("change", calcTotal);
+        dest.addEventListener("change", calcTotal);
 
 
         const merchandiseAmount = document.querySelector("#merchandiseAmount");
@@ -456,7 +458,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to calculate the total
     function calcTotal() {
-        
+        const merchandiseAmount = document.querySelector("#merchandiseAmount");
+        const shippingCost = document.querySelector("#shippingCost");
+        const taxAmount = document.querySelector("#taxAmount");
+        const totalAmount = document.querySelector("#totalAmount");
+
+        // calculations for merchandise
+        let merchandise = 0;
+        for (let item of shoppingCart) {
+            merchandise += item.price * item.quantity;
+        };
+        merchandiseAmount.textContent = "$" + merchandise.toFixed(2);
+
+        // calculations for shipping cost
+        const method = document.querySelector("#shippingMethod").value;
+        const dest = document.querySelector("#shippingDest").value;
+        let shipping = 0;
+        if (merchandise > 500 || merchandise == 0) {
+            shipping = 0;
+        } else if (method == "standard" && dest == "CA") {
+            shipping = 10;
+        } else if (method == "standard" && dest == "US") {
+            shipping = 15;
+        } else if (method == "standard" && dest == "INT") {
+            shipping = 20;
+        } else if (method == "express" && dest == "CA") {
+            shipping = 25;
+        } else if (method == "express" && dest == "US") {
+            shipping = 25;
+        } else if (method == "express" && dest == "INT") {
+            shipping = 30;
+        } else if (method == "priority" && dest == "CA") {
+            shipping = 35;
+        } else if (method == "priority" && dest == "US") {
+            shipping = 50;
+        } else if (method == "priority" && dest == "INT") {
+            shipping = 50;
+        };
+        shippingCost.textContent = "$" + shipping.toFixed(2);
+
+        // calculations for tax
+        let tax = 0;
+        if (dest == "CA") tax = merchandise * 0.05;
+        taxAmount.textContent = "$" + tax.toFixed(2);
+
+        // calculations for total
+        const total = merchandise + shipping + tax;
+        totalAmount.textContent = "$" + total.toFixed(2);
     }
 
 
