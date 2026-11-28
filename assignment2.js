@@ -252,6 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return cart;
     } //End of CART VIEW
 
+    //function to show a message (5s) to user displaying what they've added to the cart
     function snackBarHandler(message){
         const bar = document.querySelector("#snackbar");
         bar.textContent = message;

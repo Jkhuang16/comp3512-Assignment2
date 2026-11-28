@@ -76,7 +76,7 @@ p, h3 {
     #singleProductView{
         /* making img 25% of the page width relative to its parent container */
         img{
-            width: 80%;
+            width: 50%;
             height:auto
         }
     }
